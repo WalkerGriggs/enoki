@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package manifests.v1;
+option go_package = "github.com/walkergriggs/enoki/enoki/v1";
+
+service ManifestService {
+  rpc GetManifest(ManifestRequest) returns (Manifest) {};
+}
+
+message Manifest {
+  Error error = 1;
+  uint64 id = 2;
+  string path = 3;
+}
+
+message ManifestRequest {
+  string Name = 1;
+}
+
+message Error {
+  uint32 code = 1;
+  string message = 2;
+}
