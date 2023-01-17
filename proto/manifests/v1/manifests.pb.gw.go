@@ -31,15 +31,18 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
+var (
+	filter_ManifestService_GetManifest_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
 func request_ManifestService_GetManifest_0(ctx context.Context, marshaler runtime.Marshaler, client ManifestServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ManifestRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ManifestService_GetManifest_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -52,11 +55,10 @@ func local_request_ManifestService_GetManifest_0(ctx context.Context, marshaler 
 	var protoReq ManifestRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ManifestService_GetManifest_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -71,7 +73,7 @@ func local_request_ManifestService_GetManifest_0(ctx context.Context, marshaler 
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterManifestServiceHandlerFromEndpoint instead.
 func RegisterManifestServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ManifestServiceServer) error {
 
-	mux.Handle("POST", pattern_ManifestService_GetManifest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ManifestService_GetManifest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -79,7 +81,7 @@ func RegisterManifestServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/manifests.v1.ManifestService/GetManifest", runtime.WithHTTPPathPattern("/manifests.v1.ManifestService/GetManifest"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/manifests.v1.ManifestService/GetManifest", runtime.WithHTTPPathPattern("/v1/manifests"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -137,13 +139,13 @@ func RegisterManifestServiceHandler(ctx context.Context, mux *runtime.ServeMux, 
 // "ManifestServiceClient" to call the correct interceptors.
 func RegisterManifestServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ManifestServiceClient) error {
 
-	mux.Handle("POST", pattern_ManifestService_GetManifest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ManifestService_GetManifest_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/manifests.v1.ManifestService/GetManifest", runtime.WithHTTPPathPattern("/manifests.v1.ManifestService/GetManifest"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/manifests.v1.ManifestService/GetManifest", runtime.WithHTTPPathPattern("/v1/manifests"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -163,7 +165,7 @@ func RegisterManifestServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_ManifestService_GetManifest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"manifests.v1.ManifestService", "GetManifest"}, ""))
+	pattern_ManifestService_GetManifest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "manifests"}, ""))
 )
 
 var (

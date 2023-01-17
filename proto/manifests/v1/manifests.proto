@@ -3,8 +3,14 @@ syntax = "proto3";
 package manifests.v1;
 option go_package = "github.com/walkergriggs/enoki/enoki/v1";
 
+import "google/api/annotations.proto";
+
 service ManifestService {
-  rpc GetManifest(ManifestRequest) returns (Manifest) {};
+  rpc GetManifest(ManifestRequest) returns (Manifest) {
+    option (google.api.http) = {
+      get: "/v1/manifests"
+    };
+  }
 }
 
 message Manifest {

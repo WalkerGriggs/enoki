@@ -6,13 +6,15 @@ import (
 	"strings"
 
 	"google.golang.org/grpc"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+
+	"github.com/walkergriggs/enoki/proto/manifests/v1"
 )
 
 func newGateway(ctx context.Context, conn *grpc.ClientConn, opts []runtime.ServeMuxOption) (http.Handler, error) {
 	mux := runtime.NewServeMux(opts...)
 
-	if err := RegisterManifestServiceHandler(ctx, mux, conn); err != nil {
+	if err := v1.RegisterManifestServiceHandler(ctx, mux, conn); err != nil {
 		return nil, err
 	}
 	return mux, nil
