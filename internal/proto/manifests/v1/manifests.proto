@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package manifests.v1;
-option go_package = "github.com/walkergriggs/enoki/enoki/v1";
+option go_package = "github.com/walkergriggs/enoki/internal/proto/manifest/v1";
 
 import "google/api/annotations.proto";
 

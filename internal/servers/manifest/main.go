@@ -1,4 +1,4 @@
-package server
+package manifest
 
 import (
 	"context"
@@ -6,10 +6,9 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/walkergriggs/enoki/proto/manifests/v1"
-	"github.com/walkergriggs/enoki/enoki/services/manifest"
+	"github.com/walkergriggs/enoki/internal/proto/manifests/v1"
+	"github.com/walkergriggs/enoki/internal/services/manifest"
 )
-
 
 func Run(ctx context.Context) error {
 	l, err := net.Listen("tcp", "localhost:8080")
@@ -20,7 +19,7 @@ func Run(ctx context.Context) error {
 	defer func() {
 		l.Close()
 	}()
-	
+
 	var opts []grpc.ServerOption
 	s := grpc.NewServer(opts...)
 

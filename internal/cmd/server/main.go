@@ -3,14 +3,14 @@ package main
 import (
 	"context"
 	"log"
-	
-	"github.com/walkergriggs/enoki/enoki/gateway"
+
+	"github.com/walkergriggs/enoki/internal/servers/manifest"
 )
 
 func main() {
 	ctx := context.Background()
 
-	if err := gateway.Run(ctx); err != nil {
+	if err := manifest.Run(ctx); err != nil {
 		log.Fatal(err)
 	}
 }

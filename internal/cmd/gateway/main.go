@@ -4,13 +4,13 @@ import (
 	"context"
 	"log"
 
-	"github.com/walkergriggs/enoki/enoki/server"
+	"github.com/walkergriggs/enoki/internal/servers/gateway"
 )
 
 func main() {
 	ctx := context.Background()
 
-	if err := server.Run(ctx); err != nil {
+	if err := gateway.Run(ctx); err != nil {
 		log.Fatal(err)
 	}
 }
