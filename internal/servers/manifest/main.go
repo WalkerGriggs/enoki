@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/walkergriggs/enoki/internal/proto/manifests/v1"
+	pbmanifest "github.com/walkergriggs/enoki/internal/proto/manifest"
 	"github.com/walkergriggs/enoki/internal/services/manifest"
 )
 
@@ -23,7 +23,7 @@ func Run(ctx context.Context) error {
 	var opts []grpc.ServerOption
 	s := grpc.NewServer(opts...)
 
-	v1.RegisterManifestServiceServer(s, &manifest.ManifestService{})
+	pbmanifest.RegisterManifestServiceServer(s, &manifest.ManifestService{})
 
 	go func() {
 		defer s.GracefulStop()

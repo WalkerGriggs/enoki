@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "gateway",
+    srcs = ["main.go"],
+    importpath = "github.com/walkergriggs/enoki/internal/servers/gateway",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/services/gateway",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)

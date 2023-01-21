@@ -3,7 +3,7 @@ package manifest
 import (
 	"context"
 
-	pbmanifest "github.com/walkergriggs/enoki/internal/proto/manifests/v1"
+	pbmanifest "github.com/walkergriggs/enoki/internal/proto/manifest"
 )
 
 type ManifestService struct{}

@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "disk_manager",
+    srcs = ["disk_manager.go"],
+    importpath = "github.com/walkergriggs/enoki/internal/shared/disk_manager",
+    visibility = ["//:__subpackages__"],
+)

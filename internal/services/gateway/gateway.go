@@ -8,7 +8,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 
-	"github.com/walkergriggs/enoki/internal/proto/manifests/v1"
+	pbmanifest "github.com/walkergriggs/enoki/internal/proto/manifest"
 )
 
 type GatewayService struct {
@@ -24,7 +24,7 @@ func (s *GatewayService) RegisterGatewayHandlers(ctx context.Context) error {
 	}
 
 	mux := runtime.NewServeMux(s.ServeOpts...)
-	err := v1.RegisterManifestServiceHandlerFromEndpoint(ctx, mux, "localhost:8080", s.DialOpts)
+	err := pbmanifest.RegisterManifestServiceHandlerFromEndpoint(ctx, mux, "localhost:8080", s.DialOpts)
 	if err != nil {
 		return err
 	}
