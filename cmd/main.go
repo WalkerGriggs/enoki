@@ -6,6 +6,7 @@ import (
 
 	"github.com/walkergriggs/enoki/internal/servers/gateway"
 	"github.com/walkergriggs/enoki/internal/servers/manifest"
+	"github.com/walkergriggs/enoki/internal/servers/storage"
 )
 
 func main() {
@@ -15,6 +16,12 @@ func main() {
 
 	go func() {
 		if err := manifest.Run(ctx); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	go func() {
+		if err := storage.Run(ctx); err != nil {
 			log.Fatal(err)
 		}
 	}()

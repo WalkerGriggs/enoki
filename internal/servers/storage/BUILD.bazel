@@ -1,13 +1,13 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "manifest",
+    name = "storage",
     srcs = ["main.go"],
-    importpath = "github.com/walkergriggs/enoki/internal/servers/manifest",
+    importpath = "github.com/walkergriggs/enoki/internal/servers/storage",
     visibility = ["//:__subpackages__"],
     deps = [
-        "//internal/proto/manifest:manifest_go_proto",
-        "//internal/services/manifest",
+        "//internal/proto/storage:storage_go_proto",
+        "//internal/services/storage",
         "@org_golang_google_grpc//:go_default_library",
     ],
 )

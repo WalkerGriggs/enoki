@@ -25,11 +25,9 @@ git_repository(
     remote = "https://github.com/protocolbuffers/protobuf",
 )
 
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
 
 ############################################################
 # Define your own dependencies here using go_repository.
@@ -106,6 +104,13 @@ go_repository(
     importpath = "golang.org/x/net",
     sum = "h1:Q5QPcMlvfxFTAPV0+07Xz/MpK9NTXu2VDUuy0FeMfaU=",
     version = "v0.4.0",
+)
+
+go_repository(
+    name = "com_github_mattn_go_sqlite3",
+    importpath = "github.com/mattn/go-sqlite3",
+    sum = "h1:yOQRA0RpS5PFz/oikGwBEqvAWhWg5ufRz4ETLjwpU1Y=",
+    version = "v1.14.16",
 )
 
 go_rules_dependencies()

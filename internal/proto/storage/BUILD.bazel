@@ -2,37 +2,27 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 proto_library(
-    name = "manifest_proto",
-    srcs = ["manifests.proto"],
+    name = "storage_proto",
+    srcs = ["storage.proto"],
     visibility = ["//:__subpackages__"],
     deps = [
+        "//internal/proto:asset_proto",
         "//internal/proto:error_proto",
         "@go_googleapis//google/api:annotations_proto",
     ],
 )
 
 go_proto_library(
-    name = "manifest_go_proto",
+    name = "storage_go_proto",
     compilers = [
         "@io_bazel_rules_go//proto:go_grpc",
         "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-grpc-gateway:go_gen_grpc_gateway",  # keep
     ],
-    importpath = "github.com/walkergriggs/enoki/internal/proto/golang/manifest",
-    proto = ":manifest_proto",
+    importpath = "github.com/walkergriggs/enoki/internal/proto/golang/storage",
+    proto = ":storage_proto",
     visibility = ["//:__subpackages__"],
     deps = [
-        "//internal/proto:error_go_proto",
-        "@go_googleapis//google/api:annotations_go_proto",
-    ],
-)
-
-go_proto_library(
-    name = "golangmanifest_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "github.com/walkergriggs/enoki/internal/proto/golangmanifest",
-    proto = ":manifest_proto",
-    visibility = ["//:__subpackages__"],
-    deps = [
+        "//internal/proto:asset_go_proto",
         "//internal/proto:error_go_proto",
         "@go_googleapis//google/api:annotations_go_proto",
     ],

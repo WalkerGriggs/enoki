@@ -8,7 +8,8 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 
-	pbmanifest "github.com/walkergriggs/enoki/internal/proto/manifest"
+	pbmanifest "github.com/walkergriggs/enoki/internal/proto/golang/manifest"
+	pbstorage "github.com/walkergriggs/enoki/internal/proto/golang/storage"
 )
 
 type GatewayService struct {
@@ -24,7 +25,13 @@ func (s *GatewayService) RegisterGatewayHandlers(ctx context.Context) error {
 	}
 
 	mux := runtime.NewServeMux(s.ServeOpts...)
+
 	err := pbmanifest.RegisterManifestServiceHandlerFromEndpoint(ctx, mux, "localhost:8080", s.DialOpts)
+	if err != nil {
+		return err
+	}
+
+	err = pbstorage.RegisterStorageServiceHandlerFromEndpoint(ctx, mux, "localhost:8082", s.DialOpts)
 	if err != nil {
 		return err
 	}
@@ -53,7 +60,7 @@ func ListenAndServe(ctx context.Context, service *GatewayService) error {
 			if r.Method == "OPTIONS" && r.Header.Get("Access-Control-Request-Method") != "" {
 				headers := []string{"Content-Type", "Accept", "Authorization"}
 				w.Header().Set("Access-Control-Allow-Headers", strings.Join(headers, ","))
-				
+
 				methods := []string{"GET", "HEAD", "POST", "PUT", "DELETE"}
 				w.Header().Set("Access-Control-Allow-Methods", strings.Join(methods, ","))
 				return

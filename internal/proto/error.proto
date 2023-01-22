@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package enoki.internal;
+option go_package = "github.com/walkergriggs/enoki/internal/proto/golang/error";
+
+message Error {
+  uint32 code = 1;
+  string message = 2;
+}

@@ -6,8 +6,9 @@ import (
 
 	"google.golang.org/grpc"
 
-	pbmanifest "github.com/walkergriggs/enoki/internal/proto/manifest"
 	"github.com/walkergriggs/enoki/internal/services/manifest"
+
+	pbmanifest "github.com/walkergriggs/enoki/internal/proto/golang/manifest"
 )
 
 func Run(ctx context.Context) error {

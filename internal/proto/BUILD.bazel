@@ -1,0 +1,28 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "asset_proto",
+    srcs = ["asset.proto"],
+    visibility = ["//:__subpackages__"],
+)
+
+proto_library(
+    name = "error_proto",
+    srcs = ["error.proto"],
+    visibility = ["//:__subpackages__"],
+)
+
+go_proto_library(
+    name = "asset_go_proto",
+    importpath = "github.com/walkergriggs/enoki/internal/proto/golang/asset",
+    proto = ":asset_proto",
+    visibility = ["//:__subpackages__"],
+)
+
+go_proto_library(
+    name = "error_go_proto",
+    importpath = "github.com/walkergriggs/enoki/internal/proto/golang/error",
+    proto = ":error_proto",
+    visibility = ["//:__subpackages__"],
+)

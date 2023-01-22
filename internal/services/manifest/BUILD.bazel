@@ -5,5 +5,5 @@ go_library(
     srcs = ["manifest.go"],
     importpath = "github.com/walkergriggs/enoki/internal/services/manifest",
     visibility = ["//:__subpackages__"],
-    deps = ["//internal/proto/manifest"],
+    deps = ["//internal/proto/manifest:manifest_go_proto"],
 )

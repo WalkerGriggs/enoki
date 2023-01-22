@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package enoki.internal;
+option go_package = "github.com/walkergriggs/enoki/internal/proto/golang/storage";
+
+import "google/api/annotations.proto";
+import "internal/proto/error.proto";
+import "internal/proto/asset.proto";
+
+service StorageService {
+  rpc GetAsset(AssetRequest) returns (AssetResponse) {
+    option (google.api.http).get = "/v1/storage/assets/{asset_id}";
+  }
+}
+
+message AssetRequest {
+  string asset_id = 1;
+}
+
+message AssetResponse {
+  Error error = 1;
+  Asset asset = 2;
+}

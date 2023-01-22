@@ -1,9 +1,10 @@
 syntax = "proto3";
 
 package enoki.internal;
-option go_package = "github.com/walkergriggs/enoki/internal/proto/manifest";
+option go_package = "github.com/walkergriggs/enoki/internal/proto/golang/manifest";
 
 import "google/api/annotations.proto";
+import "internal/proto/error.proto";
 
 service ManifestService {
   rpc GetManifest(ManifestRequest) returns (Manifest) {
@@ -21,9 +22,4 @@ message Manifest {
 
 message ManifestRequest {
   string Name = 1;
-}
-
-message Error {
-  uint32 code = 1;
-  string message = 2;
 }

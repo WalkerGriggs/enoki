@@ -8,6 +8,7 @@ go_library(
     deps = [
         "//internal/servers/gateway",
         "//internal/servers/manifest",
+        "//internal/servers/storage",
     ],
 )
 
