@@ -8,7 +8,9 @@ go_library(
     deps = [
         "//internal/proto/manifest:manifest_go_proto",
         "//internal/proto/storage:storage_go_proto",
+        "//internal/shared/logging",
         "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime",
         "@org_golang_google_grpc//:go_default_library",
+        "@org_uber_go_zap//:zap",
     ],
 )

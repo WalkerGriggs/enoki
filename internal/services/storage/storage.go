@@ -9,7 +9,10 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"go.uber.org/zap"
+
 	"github.com/walkergriggs/enoki/internal/services/storage/db/sqlite"
+	"github.com/walkergriggs/enoki/internal/shared/logging"
 )
 
 type StorageService struct {
@@ -28,6 +31,12 @@ func NewStorageService(ctx context.Context) (*StorageService, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	logging.WithContext(ctx).Info("Initializing new database",
+		zap.String("schemaPath", sqlSchemaPath),
+		zap.String("driverName", sqlDriverName),
+		zap.String("driverSourceName", sqlDriverSourceName),
+	)
 
 	ddl, err := ioutil.ReadFile(sqlSchemaPath)
 	if err != nil {
@@ -70,4 +79,3 @@ func (s *StorageService) init(ctx context.Context, root string) error {
 		return nil
 	})
 }
-

@@ -6,7 +6,10 @@ import (
 	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
+
+	"github.com/walkergriggs/enoki/internal/shared/logging"
 
 	pbmanifest "github.com/walkergriggs/enoki/internal/proto/golang/manifest"
 	pbstorage "github.com/walkergriggs/enoki/internal/proto/golang/storage"
@@ -26,11 +29,17 @@ func (s *GatewayService) RegisterGatewayHandlers(ctx context.Context) error {
 
 	mux := runtime.NewServeMux(s.ServeOpts...)
 
+	logging.WithContext(ctx).Info("Registering manifest service",
+		zap.String("Addr", "localhost:8080"),
+	)
 	err := pbmanifest.RegisterManifestServiceHandlerFromEndpoint(ctx, mux, "localhost:8080", s.DialOpts)
 	if err != nil {
 		return err
 	}
 
+	logging.WithContext(ctx).Info("Registering storage service",
+		zap.String("Addr", "localhost:8082"),
+	)
 	err = pbstorage.RegisterStorageServiceHandlerFromEndpoint(ctx, mux, "localhost:8082", s.DialOpts)
 	if err != nil {
 		return err
@@ -41,11 +50,14 @@ func (s *GatewayService) RegisterGatewayHandlers(ctx context.Context) error {
 }
 
 func (s *GatewayService) RegisterHealthzHandler(ctx context.Context) error {
+	logging.WithContext(ctx).Info("Registering healthz handler")
+
 	if s.Mux == nil {
 		s.Mux = http.NewServeMux()
 	}
 
 	s.Mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		logging.WithContext(ctx).Info("Healthz")
 		w.Header().Set("Content-Type", "text/plain")
 		w.Write([]byte("ok"))
 	})
@@ -79,6 +91,9 @@ func ListenAndServe(ctx context.Context, service *GatewayService) error {
 		server.Shutdown(context.Background())
 	}()
 
+	logging.WithContext(ctx).Info("Serving gateway http server",
+		zap.String("Addr", server.Addr),
+	)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		return err
 	}

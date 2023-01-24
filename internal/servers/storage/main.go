@@ -4,9 +4,11 @@ import (
 	"context"
 	"net"
 
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
 	"github.com/walkergriggs/enoki/internal/services/storage"
+	"github.com/walkergriggs/enoki/internal/shared/logging"
 
 	pbstorage "github.com/walkergriggs/enoki/internal/proto/golang/storage"
 )
@@ -35,6 +37,10 @@ func Run(ctx context.Context) error {
 		defer s.GracefulStop()
 		<-ctx.Done()
 	}()
+
+	logging.WithContext(ctx).Info("Serving storage server",
+		zap.String("Addr", "localhost:8082"),
+	)
 
 	return s.Serve(l)
 }
